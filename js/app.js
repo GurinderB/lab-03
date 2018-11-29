@@ -34,6 +34,7 @@ let fixArr = () => {
       newKeywordsList.push(element);
     }
   })
+  console.log('fix array is running')
 }
 
 Pictures.prototype.render = function() {
@@ -98,18 +99,23 @@ $('select').on('change', function() {
   })
 })
 
+
 Pictures.readJson('data/page-1.json');
 $('#page-2').on('click', function(){
   $('div').hide();
+  $('option').hide()
   Pictures.allPictures = [];
   newKeywordsList = [];
   $(() => Pictures.readJson('data/page-2.json'));
+  
 })
 $('#page-1').on('click', function(){
   $('div').hide();
+  $('option').hide()
   Pictures.allPictures = [];
   newKeywordsList = [];
   $(() => Pictures.readJson('data/page-1.json'));
+  
 })
 
 
