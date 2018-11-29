@@ -90,21 +90,27 @@ $('select').on('change', function() {
   let keywordSelector = $('select').val();
   Pictures.allPictures.forEach( element => {
     if (element.keyword === keywordSelector ){
-      element.render();
+      $('div' + '#'+element.keyword).show();
     }
     if (keywordSelector === 'default'){
-      element.render();
+      $('div').show();
     }
   })
 })
 
 Pictures.readJson('data/page-1.json');
-// $('#page-2').on('click', function(){
-//   $(() => Pictures.readJson('data/page-2.json'));
-// })
-// $('#page-1').on('click', function(){
-//   $(() => Pictures.readJson('data/page-1.json'));
-// })
+$('#page-2').on('click', function(){
+  $('div').hide();
+  Pictures.allPictures = [];
+  newKeywordsList = [];
+  $(() => Pictures.readJson('data/page-2.json'));
+})
+$('#page-1').on('click', function(){
+  $('div').hide();
+  Pictures.allPictures = [];
+  newKeywordsList = [];
+  $(() => Pictures.readJson('data/page-1.json'));
+})
 
 
 
