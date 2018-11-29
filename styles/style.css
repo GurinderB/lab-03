@@ -17,7 +17,7 @@ footer {
 h1 {
     font-family: 'Aref Ruqaa', serif;
     text-align: center;
-    font-size: 200px;
+    font-size: 200%;
 }
 #horns {
     display: flex;
