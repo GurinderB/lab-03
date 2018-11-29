@@ -14,6 +14,19 @@ function Pictures(picture) {
 
 Pictures.allPictures = [];
 
+Pictures.prototype.toHtml = function() {
+  // get the template from the html doc
+  const $template = $('#handlebar-template').html();
+  // compile the template to regular HTML
+  const $source = Handlebars.compile($template);
+  // return the compiled HTML
+  return $source(this);
+}
+
+
+
+
+
 let newKeywordsList = [];
 let fixArr = () => {
   allKeyword.forEach ( element => {
@@ -50,7 +63,7 @@ Pictures.readJson = (pageNumber) => {
 
 Pictures.loadPictures = () => {
   Pictures.allPictures.forEach(picture => {
-    picture.render();
+    $('#horns').append(picture.toHtml());
   });
   renderOption();
 };
@@ -86,12 +99,12 @@ $('select').on('change', function() {
 })
 
 Pictures.readJson('data/page-1.json');
-$('#page-2').on('click', function(){
-  $(() => Pictures.readJson('data/page-2.json'));
-})
-$('#page-1').on('click', function(){
-  $(() => Pictures.readJson('data/page-1.json'));
-})
+// $('#page-2').on('click', function(){
+//   $(() => Pictures.readJson('data/page-2.json'));
+// })
+// $('#page-1').on('click', function(){
+//   $(() => Pictures.readJson('data/page-1.json'));
+// })
 
 
 
