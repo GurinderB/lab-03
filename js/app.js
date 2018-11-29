@@ -1,17 +1,29 @@
-//Display Images
 let allKeyword = [];
+//Display Images
 function Pictures(picture) {
   this.image_url = picture.image_url;
   this.title = picture.title;
   this.description = picture.description;
   this.keyword = picture.keyword;
   this.horns = picture.horns;
-  allKeyword.push(picture.keyword);
+
+  allKeyword.push(picture.keyword)
+ 
+
 }
 
 Pictures.allPictures = [];
 
-Pictures.prototype.render = function () {
+let newKeywordsList = [];
+let fixArr = () => {
+  allKeyword.forEach ( element => {
+    if (newKeywordsList.includes(element) === false){
+      newKeywordsList.push(element);
+    }
+  })
+}
+
+Pictures.prototype.render = function() {
   //render the pictures
   $('main').append('<div class="clone"></div>');
   let pictureClone = $('div[class="clone"]');
@@ -24,9 +36,6 @@ Pictures.prototype.render = function () {
 
   pictureClone.removeClass('clone');
   pictureClone.attr('class', this.keyword);
-  //   console.log(this.keyword);
-  //   pictureClone.attr('class', this.horns)
-
 };
 
 Pictures.readJson = () => {
@@ -42,16 +51,17 @@ Pictures.readJson = () => {
 Pictures.loadPictures = () => {
   Pictures.allPictures.forEach(picture => {
     picture.render();
-    renderOption();
   });
+  renderOption();
 };
 
 
 //Create DropDown
 let renderOption = () => {
-  allKeyword.forEach(element => {
+  fixArr();
+  newKeywordsList.forEach( element => {
     $('select').append('<option class="optClone"></option>');
-    console.log(element);
+    // console.log(element);
     let optionClone = $('option[class="optClone"]')
     let optionHtml = $('#option-template');
     optionClone.html(optionHtml);
@@ -61,19 +71,21 @@ let renderOption = () => {
   })
 };
 
-$(() => Pictures.readJson());
 
-$('select').on('change', function () {
+$('select').on('change', function() {
   $('div').hide();
   let keywordSelector = $('select').val();
-  console.log(keywordSelector);
-  Pictures.allPictures.forEach(element => {
-    if (element.keyword === keywordSelector) {
-      console.log('works');
+  Pictures.allPictures.forEach( element => {
+    if (element.keyword === keywordSelector ){
       element.render();
     }
-    if (keywordSelector === 'default') {
+    if (keywordSelector === 'default'){
       element.render();
     }
   })
 })
+
+
+$(() => Pictures.readJson());
+
+
