@@ -38,8 +38,8 @@ Pictures.prototype.render = function() {
   pictureClone.attr('class', this.keyword);
 };
 
-Pictures.readJson = () => {
-  $.get('data/page-1.json', 'json')
+Pictures.readJson = (pageNumber) => {
+  $.get(pageNumber, 'json')
     .then(data => {
       data.forEach(obj => {
         Pictures.allPictures.push(new Pictures(obj));
@@ -85,7 +85,13 @@ $('select').on('change', function() {
   })
 })
 
+Pictures.readJson('data/page-1.json');
+$('#page-2').on('click', function(){
+  $(() => Pictures.readJson('data/page-2.json'));
+})
+$('#page-1').on('click', function(){
+  $(() => Pictures.readJson('data/page-1.json'));
+})
 
-$(() => Pictures.readJson());
 
 
