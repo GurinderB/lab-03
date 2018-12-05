@@ -58,6 +58,7 @@ Pictures.readJson = (pageNumber) => {
       data.forEach(obj => {
         Pictures.allPictures.push(new Pictures(obj));
       });
+      // Image.sortBy( Image.all, 'title')
     })
     .then(Pictures.loadPictures);
 };
@@ -69,6 +70,22 @@ Pictures.loadPictures = () => {
   renderOption();
 };
 
+// Image.sortBy = (array, property) => {
+//   array.sort( (a, b) => {
+//     let firstComparison = a[property];
+//     let secondComparison = b[property];
+
+//     if (firstComparison < secondComparison){
+//       return 1;
+//     }
+//     if (firstComparison > secondComparison){
+//       return 1;
+//     }
+//     if (firstComparison === secondComparison){
+//       return 1;
+//     }
+//   })
+// }
 
 //Create DropDown
 let renderOption = () => {
@@ -99,23 +116,54 @@ $('select').on('change', function() {
   })
 })
 
-
+let whichPage = 'data/page-1.json'
 Pictures.readJson('data/page-1.json');
 $('#page-2').on('click', function(){
-  $('div').hide();
-  $('option').hide()
+  $('div').remove();
+  $('option').remove()
   Pictures.allPictures = [];
   newKeywordsList = [];
   $(() => Pictures.readJson('data/page-2.json'));
+  whichPage = 'data/page-2.json';
   
 })
 $('#page-1').on('click', function(){
-  $('div').hide();
-  $('option').hide()
+  $('div').remove();
+  $('option').remove()
   Pictures.allPictures = [];
   newKeywordsList = [];
   $(() => Pictures.readJson('data/page-1.json'));
+  whichPage = 'data/page-1.json'
   
+})
+
+$('#sort-title').on('click', function(){
+  $('div').remove()
+  $('option').remove()
+  Pictures.allPictures.sort((a,b)=>{
+    let propertyA = a.title;
+    let propertyB = b.title;
+    
+    return ( propertyA > propertyB ) ? 1 : ( propertyA < propertyB ) ? -1 : 0;
+  });
+  console.log(Pictures.allPictures);
+  Pictures.loadPictures();
+  newKeywordsList = [];
+  fixArr();
+
+})
+$('#sort-horns').on('click', function(){
+  $('div').remove();
+  $('option').remove()
+  Pictures.allPictures.sort((a,b)=>{
+    let propertyA = a.horns;
+    let propertyB = b.horns;
+    
+    return ( propertyA > propertyB ) ? 1 : ( propertyA < propertyB ) ? -1 : 0;
+  });
+  Pictures.loadPictures();
+  newKeywordsList = [];
+  fixArr();
 })
 
 
